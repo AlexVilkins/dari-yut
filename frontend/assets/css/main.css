@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-fg font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+
+  /* Якорные секции лендинга не уезжают под фиксированную шапку */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-forest text-cream hover:bg-forest-muted;
+  }
+
+  .btn-accent {
+    @apply btn bg-accent text-cream hover:bg-accent-hover;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line bg-cream/70 text-fg hover:bg-bg-deep;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm outline-none transition focus:border-forest focus:ring-2 focus:ring-forest/15;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-fg;
+  }
+
+  .card {
+    @apply rounded-xl2 border border-line bg-white shadow-card;
+  }
+
+  .eyebrow {
+    @apply text-xs uppercase tracking-[0.35em] text-forest-muted;
+  }
+}
+
+@layer utilities {
+  /* Мягкое «сияние» героя — упрощённая версия hero-aurora лендинга */
+  .hero-aurora {
+    background:
+      radial-gradient(55% 50% at 18% 20%, rgba(31, 77, 67, 0.1), transparent 70%),
+      radial-gradient(50% 45% at 85% 25%, rgba(184, 74, 60, 0.1), transparent 70%),
+      linear-gradient(180deg, #fbf7ef 0%, #f1e8d8 100%);
+  }
+}
