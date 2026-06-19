@@ -1,0 +1,56 @@
+<script setup lang="ts">
+// Единый набор иконок (Lucide-стиль, stroke 1.7). SVG, без emoji.
+// Использование: <AppIcon name="cart" /> или <AppIcon name="check" :size="20" />
+const props = withDefaults(defineProps<{ name: string; size?: number | string }>(), {
+  size: 20,
+})
+
+// Пути иконок (24×24 viewBox). Добавляйте новые сюда.
+const paths: Record<string, string[]> = {
+  cart: ['M3 4h2l2.5 11.5a2 2 0 0 0 2 1.5h7a2 2 0 0 0 2-1.5L22 8H6.5', 'M10 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z', 'M18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z'],
+  user: ['M20 21a8 8 0 0 0-16 0', 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z'],
+  menu: ['M4 7h16M4 12h16M4 17h16'],
+  close: ['M6 6l12 12M6 18 18 6'],
+  check: ['M4 12.5 9 17.5 20 6.5'],
+  arrowRight: ['M5 12h14', 'M13 6l6 6-6 6'],
+  chevronRight: ['M9 6l6 6-6 6'],
+  plus: ['M12 5v14M5 12h14'],
+  minus: ['M5 12h14'],
+  trash: ['M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m2 0v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7m4 4v6m4-6v6'],
+  heart: ['M12 20s-7-4.5-9.5-9A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9.5 5c-2.5 4.5-9.5 9-9.5 9Z'],
+  phone: ['M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z'],
+  mail: ['M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z', 'm3.5 6.5 8.5 6 8.5-6'],
+  mapPin: ['M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z', 'M12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z'],
+  send: ['M22 2 11 13', 'M22 2 15 22l-4-9-9-4 20-7Z'],
+  needle: ['M3 21 14 10', 'M13 4l7 7-3 3-7-7 3-3Z', 'M11 6l7 7'],
+  scissors: ['M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z', 'M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z', 'M8.5 8.5 21 21', 'M8.5 15.5 21 3'],
+  sparkles: ['M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3Z', 'M19 14l.8 2L22 17l-2.2.9L19 20l-.8-2.1L16 17l2.2-1 .8-2Z'],
+  truck: ['M3 6h11v9H3z', 'M14 9h4l3 3v3h-7z', 'M7.5 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z', 'M17.5 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z'],
+  shield: ['M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z', 'M9 12l2 2 4-4'],
+  clock: ['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z', 'M12 7v5l3 2'],
+  award: ['M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z', 'M8.5 13.5 7 22l5-3 5 3-1.5-8.5'],
+  star: ['M12 3l2.6 5.5 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.5l1.1-6L3.4 9.3l6-.8L12 3Z'],
+  telegram: ['M22 4 2 11l6 2 2 6 3-4 5 4 4-15Z', 'M8 13l9-6-6 7'],
+  package: ['M12 2 3 7v10l9 5 9-5V7l-9-5Z', 'M3 7l9 5 9-5', 'M12 12v10'],
+  logout: ['M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4', 'M16 17l5-5-5-5', 'M21 12H9'],
+}
+
+const d = computed(() => paths[props.name] ?? [])
+</script>
+
+<template>
+  <svg
+    :width="size"
+    :height="size"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    class="shrink-0"
+  >
+    <path v-for="(p, i) in d" :key="i" :d="p" />
+  </svg>
+</template>

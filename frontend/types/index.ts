@@ -10,18 +10,24 @@ export interface Product {
   category: string
   description: string
   price: number
+  /** Доступные размеры/варианты. Если заданы — выбор обязателен. Опционально — мок. */
+  sizes?: string[]
   image_url: string
   in_stock: boolean
   is_active: boolean
 }
 
 export interface CartItem {
+  /** Уникальный ключ строки корзины: `${product_id}:${size ?? ''}`. */
+  line_id: string
   product_id: number
   slug: string
   name: string
   price: number
   image_url: string
   quantity: number
+  /** Выбранный размер/вариант (если у товара есть варианты). */
+  size?: string
 }
 
 export type UserRole = 'admin' | 'customer'
@@ -42,6 +48,7 @@ export interface OrderItem {
   product_name: string
   price: number
   quantity: number
+  size?: string
 }
 
 export interface Order {

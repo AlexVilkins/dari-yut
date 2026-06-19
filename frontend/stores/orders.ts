@@ -12,38 +12,37 @@ interface CreateOrderInput {
 export const useOrdersStore = defineStore('orders', {
   state: () => ({
     orders: [] as Order[],
+    loaded: false,
   }),
 
   actions: {
-    // MOCK: заявка сохраняется локально. Заменить на POST /orders,
-    // а список «Мои заявки» — на GET /orders/me.
-    create(input: CreateOrderInput): Order {
-      const nextId = this.orders.length
-        ? Math.max(...this.orders.map((o) => o.id)) + 1
-        : 1
-
-      const order: Order = {
-        id: nextId,
-        contact_name: input.contact_name,
-        phone: input.phone,
-        delivery_address: input.delivery_address,
-        comment: input.comment,
-        status: 'new',
-        payment_status: 'unpaid',
-        total: input.items.reduce((sum, i) => sum + i.price * i.quantity, 0),
-        created_at: new Date().toISOString(),
-        items: input.items.map((i) => ({
-          product_id: i.product_id,
-          product_name: i.name,
-          price: i.price,
-          quantity: i.quantity,
-        })),
-      }
-
+    // POST /orders — создаёт заявку из корзины. Цену/итог бэкенд считает сам
+    // по своим данным, поэтому шлём только id товара, количество и размер.
+    async create(input: CreateOrderInput): Promise<Order> {
+      const api = useApi()
+      const order = await api<Order>('/orders', {
+        method: 'POST',
+        body: {
+          contact_name: input.contact_name,
+          phone: input.phone,
+          delivery_address: input.delivery_address,
+          comment: input.comment,
+          items: input.items.map((i) => ({
+            product_id: i.product_id,
+            quantity: i.quantity,
+            size: i.size ?? '',
+          })),
+        },
+      })
       this.orders.unshift(order)
       return order
     },
-  },
 
-  persist: true,
+    // GET /orders/me — история заявок текущего пользователя.
+    async fetchMine() {
+      const api = useApi()
+      this.orders = await api<Order[]>('/orders/me')
+      this.loaded = true
+    },
+  },
 })

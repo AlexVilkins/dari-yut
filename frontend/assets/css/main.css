@@ -20,7 +20,21 @@
 
   /* Якорные секции лендинга не уезжают под фиксированную шапку */
   section[id] {
-    scroll-margin-top: 5rem;
+    scroll-margin-top: 6rem;
+  }
+
+  /* Цены и числовые данные — табличные цифры (не «прыгают» при смене) */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Видимый, но аккуратный focus только для клавиатуры */
+  :where(a, button, input, textarea, select):focus-visible {
+    @apply outline-none ring-2 ring-forest/40 ring-offset-2 ring-offset-bg;
+  }
+
+  ::selection {
+    @apply bg-forest/15 text-fg;
   }
 }
 
@@ -29,45 +43,153 @@
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
   }
 
+  /* ---- Кнопки: общий каркас + плавный «lift» на hover ---- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium
+           transition-all duration-200 ease-out
+           disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
   }
 
   .btn-primary {
-    @apply btn bg-forest text-cream hover:bg-forest-muted;
+    @apply btn bg-forest text-cream shadow-sm hover:-translate-y-0.5 hover:bg-forest-muted hover:shadow-soft active:translate-y-0;
   }
 
   .btn-accent {
-    @apply btn bg-accent text-cream hover:bg-accent-hover;
+    @apply btn bg-accent text-cream shadow-sm hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-glow active:translate-y-0;
   }
 
   .btn-ghost {
-    @apply btn border border-line bg-cream/70 text-fg hover:bg-bg-deep;
+    @apply btn border border-line bg-cream/70 text-fg hover:-translate-y-0.5 hover:border-forest/30 hover:bg-bg-deep active:translate-y-0;
   }
 
+  .btn-lg {
+    @apply px-7 py-3 text-base;
+  }
+
+  /* ---- Поля форм ---- */
   .field {
-    @apply w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm outline-none transition focus:border-forest focus:ring-2 focus:ring-forest/15;
+    @apply w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm outline-none transition
+           placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/15;
   }
 
   .label {
     @apply mb-1.5 block text-sm font-medium text-fg;
   }
 
+  /* ---- Карточка ---- */
   .card {
     @apply rounded-xl2 border border-line bg-white shadow-card;
   }
 
+  .card-hover {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:border-forest/20 hover:shadow-soft;
+  }
+
+  /* ---- Надзаголовок со «стежком» ---- */
   .eyebrow {
-    @apply text-xs uppercase tracking-[0.35em] text-forest-muted;
+    @apply inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-forest-muted;
+  }
+
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-6 bg-accent/50;
+  }
+
+  /* ---- Бейджи / чипы ---- */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] font-medium leading-none;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent text-cream shadow-sm;
+  }
+
+  .badge-forest {
+    @apply badge bg-forest text-cream shadow-sm;
+  }
+
+  .badge-soft {
+    @apply badge bg-cream/90 text-forest ring-1 ring-line backdrop-blur;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-cream/60 px-4 py-2 text-sm text-muted
+           transition-colors hover:border-forest/30 hover:bg-bg-deep hover:text-fg;
+  }
+
+  .chip-active {
+    @apply border-forest bg-forest text-cream hover:bg-forest hover:text-cream;
   }
 }
 
 @layer utilities {
-  /* Мягкое «сияние» героя — упрощённая версия hero-aurora лендинга */
+  /* Мягкое «сияние» героя */
   .hero-aurora {
     background:
-      radial-gradient(55% 50% at 18% 20%, rgba(31, 77, 67, 0.1), transparent 70%),
+      radial-gradient(55% 50% at 18% 20%, rgba(31, 77, 67, 0.12), transparent 70%),
       radial-gradient(50% 45% at 85% 25%, rgba(184, 74, 60, 0.1), transparent 70%),
       linear-gradient(180deg, #fbf7ef 0%, #f1e8d8 100%);
+  }
+
+  /* Тонкая «бумажная» зернистость поверх фона — премиальная фактура */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  /* Декоративная пунктирная «строчка»-разделитель */
+  .stitch {
+    background-image: repeating-linear-gradient(
+      90deg,
+      theme('colors.line') 0 8px,
+      transparent 8px 16px
+    );
+  }
+
+  /* Бегущая строка-марки клиентов */
+  .marquee {
+    animation: marquee 32s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Появление при загрузке/скролле */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .marquee {
+      animation: none;
+    }
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

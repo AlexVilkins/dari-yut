@@ -11,11 +11,11 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  // Источник данных. Сейчас указывает на встроенные mock-роуты Nitro (/api/*).
-  // Когда появится FastAPI — поменять apiBase на его адрес.
+  // Источник данных — бэкенд FastAPI. Переопределяется переменной окружения
+  // NUXT_PUBLIC_API_BASE (например, адрес прод-бэкенда при деплое).
   runtimeConfig: {
     public: {
-      apiBase: '/api',
+      apiBase: 'http://localhost:8000',
     },
   },
 
@@ -30,8 +30,12 @@ export default defineNuxtConfig({
           content:
             'Профессиональная машинная вышивка в Санкт-Петербурге: корпоративная символика, подарки, домашний текстиль. Опыт 5+ лет, тираж и единичные заказы.',
         },
+        { name: 'theme-color', content: '#1f4d43' },
+        { property: 'og:site_name', content: 'Дари Уют' },
+        { property: 'og:locale', content: 'ru_RU' },
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

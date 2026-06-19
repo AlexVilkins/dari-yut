@@ -21,11 +21,16 @@ export default <Partial<Config>>{
         body: ['Onest', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 10px 30px -12px rgba(31, 77, 67, 0.18)',
+        soft: '0 18px 40px -16px rgba(31, 77, 67, 0.25)',
         card: '0 4px 20px -8px rgba(30, 26, 23, 0.12)',
+        glow: '0 12px 30px -10px rgba(184, 74, 60, 0.45)',
       },
       borderRadius: {
         xl2: '1.25rem',
+        xl3: '1.75rem',
+      },
+      transitionTimingFunction: {
+        soft: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
     },
   },
