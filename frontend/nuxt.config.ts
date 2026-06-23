@@ -20,6 +20,8 @@ export default defineNuxtConfig({
   },
 
   app: {
+    // Плавный переход между страницами (CSS в assets/css/main.css).
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: { lang: 'ru' },
       meta: [

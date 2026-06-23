@@ -32,6 +32,7 @@ function decrement() {
     <div class="relative overflow-hidden bg-bg-deep">
       <NuxtLink :to="`/catalog/${product.slug}`" class="block" :aria-label="product.name">
         <img
+          v-img-fallback
           :src="product.image_url"
           :alt="product.name"
           loading="lazy"

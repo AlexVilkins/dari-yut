@@ -56,11 +56,7 @@ const faq = [
     <!-- Шапка раздела -->
     <header class="hero-aurora border-b border-line">
       <div class="container-x py-12 sm:py-16">
-        <nav class="text-sm text-muted">
-          <NuxtLink to="/" class="transition-colors hover:text-forest">Главная</NuxtLink>
-          <span class="px-2 text-muted/50">/</span>
-          <span class="text-fg">Доставка</span>
-        </nav>
+        <AppBreadcrumbs :items="[{ label: 'Доставка и оплата' }]" />
         <h1 class="mt-4 font-heading text-[clamp(2rem,5vw,3rem)] leading-tight">Доставка и оплата</h1>
         <p class="mt-3 max-w-xl text-lg text-muted">
           Доставляем по Санкт-Петербургу и всей России. Способ и стоимость согласуем

@@ -69,11 +69,7 @@ useSeoMeta({
     <!-- Заголовок раздела -->
     <header class="hero-aurora border-b border-line">
       <div class="container-x py-12 sm:py-16">
-        <nav class="text-sm text-muted">
-          <NuxtLink to="/" class="transition-colors hover:text-forest">Главная</NuxtLink>
-          <span class="px-2 text-muted/50">/</span>
-          <span class="text-fg">Каталог</span>
-        </nav>
+        <AppBreadcrumbs :items="[{ label: 'Каталог' }]" />
         <div class="mt-4 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 class="font-heading text-[clamp(2rem,5vw,3rem)] leading-tight">
@@ -134,37 +130,56 @@ useSeoMeta({
         </select>
       </div>
 
-      <!-- Состояния -->
-      <div v-if="pending" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <div v-for="n in 8" :key="n" class="card overflow-hidden">
-          <div class="aspect-square w-full animate-pulse bg-bg-deep" />
-          <div class="space-y-3 p-4">
-            <div class="h-4 w-3/4 animate-pulse rounded bg-bg-deep" />
-            <div class="h-5 w-1/3 animate-pulse rounded bg-bg-deep" />
-            <div class="h-10 w-full animate-pulse rounded-full bg-bg-deep" />
+      <!-- Состояния. Transition мягко анимирует смену категории/фильтров
+           (это смена query, а не маршрута — pageTransition тут не срабатывает). -->
+      <Transition name="fade" mode="out-in">
+        <div v-if="pending" key="pending" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div v-for="n in 8" :key="n" class="card overflow-hidden">
+            <div class="aspect-square w-full animate-pulse bg-bg-deep" />
+            <div class="space-y-3 p-4">
+              <div class="h-4 w-3/4 animate-pulse rounded bg-bg-deep" />
+              <div class="h-5 w-1/3 animate-pulse rounded bg-bg-deep" />
+              <div class="h-10 w-full animate-pulse rounded-full bg-bg-deep" />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div v-else-if="error" class="card p-12 text-center">
-        <p class="text-accent">Не удалось загрузить каталог.</p>
-        <NuxtLink to="/catalog" class="btn-ghost mt-5">Обновить</NuxtLink>
-      </div>
+        <div v-else-if="error" key="error" class="card p-12 text-center">
+          <p class="text-accent">Не удалось загрузить каталог.</p>
+          <NuxtLink to="/catalog" class="btn-ghost mt-5">Обновить</NuxtLink>
+        </div>
 
-      <!-- Нет результатов после фильтрации -->
-      <div v-else-if="!count" class="card p-12 text-center">
-        <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-bg-deep text-muted">
-          <AppIcon name="sparkles" :size="26" />
-        </span>
-        <p class="mt-4 text-muted">
-          {{ hasActiveFilters || totalCount ? 'Ничего не найдено по заданным условиям.' : 'В этой категории пока нет товаров.' }}
-        </p>
-        <button v-if="hasActiveFilters" class="btn-ghost mt-5" @click="resetFilters">Сбросить фильтры</button>
-        <NuxtLink v-else to="/catalog" class="btn-primary mt-5">Показать все</NuxtLink>
-      </div>
+        <!-- Нет результатов после фильтрации -->
+        <div v-else-if="!count" key="empty" class="card p-12 text-center">
+          <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-bg-deep text-muted">
+            <AppIcon name="sparkles" :size="26" />
+          </span>
+          <p class="mt-4 text-muted">
+            {{ hasActiveFilters || totalCount ? 'Ничего не найдено по заданным условиям.' : 'В этой категории пока нет товаров.' }}
+          </p>
+          <button v-if="hasActiveFilters" class="btn-ghost mt-5" @click="resetFilters">Сбросить фильтры</button>
+          <NuxtLink v-else to="/catalog" class="btn-primary mt-5">Показать все</NuxtLink>
+        </div>
 
-      <div v-else class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <ProductCard v-for="p in filtered" :key="p.id" :product="p" />
+        <div :key="`grid:${activeCategory}`" v-else class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <ProductCard v-for="p in filtered" :key="p.id" :product="p" />
+        </div>
+      </Transition>
+
+      <!-- Вышивка на заказ -->
+      <div class="mt-12 overflow-hidden rounded-xl3 border border-line bg-cream/50 p-6 sm:p-8">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="font-heading text-xl sm:text-2xl">Не нашли подходящее?</h2>
+            <p class="mt-2 max-w-lg text-sm text-muted">
+              Сделаем вышивку под ваш макет: логотип, имя или орнамент на любом изделии.
+              Пришлите идею — рассчитаем стоимость и сроки.
+            </p>
+          </div>
+          <NuxtLink to="/services#quote" class="btn-accent btn-lg shrink-0">
+            Вышивка на заказ <AppIcon name="arrowRight" :size="18" />
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>

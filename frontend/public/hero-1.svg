@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="720" viewBox="0 0 600 720" role="img" aria-label="Машинная вышивка в пяльцах">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f1e6"/>
+      <stop offset="1" stop-color="#e3d6bf"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.4" r="0.62">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="stitch" width="32" height="32" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 16 h11 M21 16 h11" stroke="#1f4d43" stroke-opacity="0.08" stroke-width="3" stroke-linecap="round"/>
+    </pattern>
+    <linearGradient id="hoop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c89b6a"/>
+      <stop offset="1" stop-color="#9c6f44"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="720" fill="url(#bg)"/>
+  <rect width="600" height="720" fill="url(#stitch)"/>
+  <rect width="600" height="720" fill="url(#glow)"/>
+
+  <!-- Пяльцы (вышивальное кольцо) с натянутой тканью -->
+  <g transform="translate(300 322)">
+    <circle r="170" fill="none" stroke="url(#hoop)" stroke-width="22"/>
+    <circle r="170" fill="none" stroke="#000000" stroke-opacity="0.08" stroke-width="22" stroke-dasharray="3 24"/>
+    <!-- винт-зажим -->
+    <g transform="translate(0 -182)">
+      <rect x="-16" y="-14" width="32" height="34" rx="7" fill="url(#hoop)"/>
+      <circle cx="0" cy="3" r="6" fill="#7c5631"/>
+    </g>
+    <!-- ткань -->
+    <circle r="159" fill="#fbf7ef"/>
+    <circle r="159" fill="url(#stitch)"/>
+
+    <!-- вышитый цветочный мотив -->
+    <g fill="none" stroke="#1f4d43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 120 C -6 60 -6 20 0 -10"/>
+      <path d="M0 70 C -34 56 -52 30 -44 4 C -16 14 2 40 0 70Z" fill="#2f6a4f" fill-opacity="0.15"/>
+      <path d="M0 95 C 32 82 50 56 44 30 C 18 40 2 66 0 95Z" fill="#2f6a4f" fill-opacity="0.15"/>
+    </g>
+    <g transform="translate(0 -34)">
+      <g fill="#b84a3c" fill-opacity="0.9">
+        <circle cx="0" cy="-30" r="20"/>
+        <circle cx="29" cy="-9" r="20"/>
+        <circle cx="18" cy="26" r="20"/>
+        <circle cx="-18" cy="26" r="20"/>
+        <circle cx="-29" cy="-9" r="20"/>
+      </g>
+      <circle r="17" fill="#e9c46a"/>
+    </g>
+  </g>
+
+  <!-- Игла с нитью -->
+  <g stroke-linecap="round">
+    <path d="M474 148 C 432 208 402 250 374 286" fill="none" stroke="#b84a3c" stroke-width="4" stroke-dasharray="1 12"/>
+    <g transform="translate(374 286) rotate(38)">
+      <line x1="0" y1="0" x2="0" y2="-92" stroke="#7c8a99" stroke-width="6"/>
+      <line x1="0" y1="0" x2="0" y2="-92" stroke="#c7d0d8" stroke-width="2"/>
+      <ellipse cx="0" cy="-84" rx="3.4" ry="8" fill="none" stroke="#7c8a99" stroke-width="3"/>
+    </g>
+  </g>
+
+  <text x="300" y="602" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="40" font-style="italic" fill="#1f4d43">машинная вышивка</text>
+  <text x="300" y="644" text-anchor="middle" font-family="'Onest', system-ui, sans-serif" font-size="17" letter-spacing="7" fill="#1f4d43" fill-opacity="0.55">ДАРИ УЮТ · СПб</text>
+</svg>

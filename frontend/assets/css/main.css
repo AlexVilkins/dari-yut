@@ -123,6 +123,39 @@
 }
 
 @layer utilities {
+  /* Переход между страницами (app.pageTransition: name 'page', mode out-in) */
+  .page-enter-active,
+  .page-leave-active {
+    transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .page-enter-from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .page-leave-to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  /* Лёгкое затухание для смены контента в пределах страницы
+     (например, переключение категорий каталога — меняется query, а не маршрут). */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .fade-enter-from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
   /* Мягкое «сияние» героя */
   .hero-aurora {
     background:

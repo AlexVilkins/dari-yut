@@ -18,13 +18,13 @@ onUnmounted(() => {
   if (import.meta.client) document.body.style.overflow = ''
 })
 
-function goCheckout() {
-  close()
-  navigateTo('/checkout')
-}
 function goCart() {
   close()
   navigateTo('/cart')
+}
+function goCatalog() {
+  close()
+  navigateTo('/catalog')
 }
 </script>
 
@@ -83,7 +83,7 @@ function goCart() {
             </span>
             <p class="font-heading text-lg">Пока пусто</p>
             <p class="max-w-xs text-sm text-muted">Добавьте товары из каталога — они появятся здесь.</p>
-            <button class="btn-primary mt-2" @click="goCart">В каталог</button>
+            <button class="btn-primary mt-2" @click="goCatalog">В каталог</button>
           </div>
 
           <!-- Список -->
@@ -91,7 +91,7 @@ function goCart() {
             <ul class="flex-1 space-y-3 overflow-y-auto px-5 py-4">
               <li v-for="item in cart.items" :key="item.line_id" class="flex gap-3">
                 <NuxtLink :to="`/catalog/${item.slug}`" class="shrink-0 overflow-hidden rounded-xl" @click="close">
-                  <img :src="item.image_url" :alt="item.name" class="h-20 w-20 object-cover" />
+                  <img v-img-fallback :src="item.image_url" :alt="item.name" class="h-20 w-20 object-cover" />
                 </NuxtLink>
                 <div class="flex flex-1 flex-col">
                   <NuxtLink
@@ -131,10 +131,10 @@ function goCart() {
                 <span>Итого</span>
                 <span class="tnum font-semibold">{{ formatPrice(cart.total) }}</span>
               </div>
-              <button class="btn-accent mt-4 w-full" @click="goCheckout">
-                Оформить заявку <AppIcon name="arrowRight" :size="18" />
+              <button class="btn-accent mt-4 w-full" @click="goCart">
+                Перейти в корзину <AppIcon name="arrowRight" :size="18" />
               </button>
-              <button class="btn-ghost mt-2 w-full" @click="goCart">Открыть корзину</button>
+              <button class="btn-ghost mt-2 w-full" @click="goCatalog">Продолжить покупки</button>
             </footer>
           </template>
         </aside>

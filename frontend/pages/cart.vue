@@ -7,11 +7,7 @@ useSeoMeta({ title: 'Корзина', robots: 'noindex' })
 
 <template>
   <div class="container-x py-8 sm:py-12">
-    <nav class="text-sm text-muted">
-      <NuxtLink to="/catalog" class="transition-colors hover:text-forest">Каталог</NuxtLink>
-      <span class="px-2 text-muted/50">/</span>
-      <span class="text-fg">Корзина</span>
-    </nav>
+    <AppBreadcrumbs :items="[{ label: 'Каталог', to: '/catalog' }, { label: 'Корзина' }]" />
     <h1 class="mt-4 font-heading text-[clamp(2rem,5vw,3rem)]">Корзина</h1>
 
     <ClientOnly>
@@ -38,6 +34,7 @@ useSeoMeta({ title: 'Корзина', robots: 'noindex' })
           >
             <NuxtLink :to="`/catalog/${item.slug}`" class="shrink-0 overflow-hidden rounded-xl">
               <img
+                v-img-fallback
                 :src="item.image_url"
                 :alt="item.name"
                 class="h-24 w-24 object-cover transition-transform duration-500 hover:scale-105"

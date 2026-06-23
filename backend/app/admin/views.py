@@ -1,5 +1,12 @@
-from sqladmin import ModelView
+from typing import Any
 
+from sqladmin import ModelView
+from sqladmin.fields import FileField
+from starlette.datastructures import UploadFile
+from starlette.requests import Request
+from wtforms import Form
+
+from app.core.storage import save_product_image
 from app.models.order import Order, OrderItem
 from app.models.product import Category, Product
 from app.models.user import User
@@ -46,11 +53,36 @@ class ProductAdmin(ModelView, model=Product):
         Product.category: "Категория",
         Product.description: "Описание",
         Product.price: "Цена",
-        Product.image_url: "URL изображения",
+        Product.image_url: "URL изображения (или загрузите файл ниже)",
         Product.sizes: "Размеры (через запятую)",
         Product.in_stock: "В наличии",
         Product.is_active: "Активен",
     }
+
+    async def scaffold_form(self, rules: list[str] | None = None) -> type[Form]:
+        """Добавляем к стандартной форме поле загрузки файла-изображения.
+
+        Поле `image_upload` не привязано к колонке модели — загруженный файл
+        сохраняется в on_model_change, а в `image_url` пишется итоговый URL.
+        """
+        form_class = await super().scaffold_form(rules)
+        form_class.image_upload = FileField("Загрузить изображение файлом")
+        return form_class
+
+    async def on_model_change(
+        self, data: dict, model: Any, is_created: bool, request: Request
+    ) -> None:
+        # Поле формы, которого нет в модели, — убираем из data в любом случае,
+        # иначе SQLAdmin попытается записать его в несуществующую колонку.
+        upload = data.pop("image_upload", None)
+
+        if isinstance(upload, UploadFile) and upload.filename:
+            content = await upload.read()
+            if content:
+                rel_url = save_product_image(upload.filename, content)
+                # Полный URL с учётом текущего хоста — чтобы фронт на другом
+                # домене/порту мог загрузить картинку напрямую с бэкенда.
+                data["image_url"] = str(request.base_url).rstrip("/") + rel_url
 
 
 class OrderAdmin(ModelView, model=Order):
@@ -61,6 +93,7 @@ class OrderAdmin(ModelView, model=Order):
         Order.id,
         Order.contact_name,
         Order.phone,
+        Order.delivery_address,
         Order.status,
         Order.payment_status,
         Order.total,

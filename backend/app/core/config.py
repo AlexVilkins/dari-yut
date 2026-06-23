@@ -22,6 +22,11 @@ class Settings(BaseSettings):
     # В dev — SQLite-файл, в проде — PostgreSQL через DATABASE_URL.
     DATABASE_URL: str = "sqlite:///./dariyut.db"
 
+    # Каталог для загруженных файлов (изображения товаров).
+    # Раздаётся как статика по пути MEDIA_URL (см. app/main.py).
+    MEDIA_DIR: str = "media"
+    MEDIA_URL: str = "/media"
+
     # Подпись JWT и сессии админки.
     SECRET_KEY: str = "change-me-in-production-please-use-a-long-random-string"
     ALGORITHM: str = "HS256"

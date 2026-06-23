@@ -54,9 +54,9 @@ const year = new Date().getFullYear()
         <div class="text-sm">
           <p class="eyebrow mb-4">Навигация</p>
           <ul class="space-y-2.5">
+            <li><NuxtLink to="/services" class="text-muted transition-colors hover:text-forest">Услуги и цены</NuxtLink></li>
             <li><NuxtLink to="/catalog" class="text-muted transition-colors hover:text-forest">Каталог</NuxtLink></li>
             <li><NuxtLink to="/delivery" class="text-muted transition-colors hover:text-forest">Доставка и оплата</NuxtLink></li>
-            <li><NuxtLink to="/#about" class="text-muted transition-colors hover:text-forest">О компании</NuxtLink></li>
             <li><NuxtLink to="/#contact" class="text-muted transition-colors hover:text-forest">Контакты</NuxtLink></li>
           </ul>
         </div>

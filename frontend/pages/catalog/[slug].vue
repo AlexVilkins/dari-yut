@@ -33,13 +33,9 @@ const related = computed(() =>
   (all.value ?? []).filter((x) => x.category === p.category && x.id !== p.id).slice(0, 4),
 )
 
-// Галерея (мок): основное фото + вариации того же seed.
-const gallery = [
-  p.image_url,
-  p.image_url.replace('/800/800', '/801/801'),
-  p.image_url.replace('/800/800', '/802/802'),
-]
-const activeImage = ref(gallery[0])
+// Галерея: основное фото товара (без дублей-вариаций).
+const gallery = [...new Set([p.image_url].filter(Boolean))]
+const activeImage = ref(gallery[0] ?? p.image_url)
 
 // Варианты (размеры).
 const hasSizes = computed(() => (p.sizes?.length ?? 0) > 0)
@@ -109,27 +105,20 @@ useHead({
 <template>
   <div v-if="product" class="container-x py-8 sm:py-12">
     <!-- Хлебные крошки -->
-    <nav class="text-sm text-muted">
-      <NuxtLink to="/" class="transition-colors hover:text-forest">Главная</NuxtLink>
-      <span class="px-2 text-muted/50">/</span>
-      <NuxtLink to="/catalog" class="transition-colors hover:text-forest">Каталог</NuxtLink>
-      <template v-if="categoryName">
-        <span class="px-2 text-muted/50">/</span>
-        <NuxtLink
-          :to="{ path: '/catalog', query: { category: product.category } }"
-          class="transition-colors hover:text-forest"
-        >
-          {{ categoryName }}
-        </NuxtLink>
-      </template>
-      <span class="px-2 text-muted/50">/</span>
-      <span class="text-fg">{{ product.name }}</span>
-    </nav>
+    <AppBreadcrumbs
+      :items="[
+        { label: 'Каталог', to: '/catalog' },
+        ...(categoryName
+          ? [{ label: categoryName, to: { path: '/catalog', query: { category: product.category } } }]
+          : []),
+        { label: product.name },
+      ]"
+    />
 
     <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
       <!-- Галерея -->
       <div class="flex flex-col-reverse gap-4 sm:flex-row">
-        <div class="flex gap-3 sm:flex-col">
+        <div v-if="gallery.length > 1" class="flex gap-3 sm:flex-col">
           <button
             v-for="(img, i) in gallery"
             :key="i"
@@ -143,12 +132,12 @@ useHead({
             :aria-label="`Фото ${i + 1}`"
             @click="activeImage = img"
           >
-            <img :src="img" :alt="`${product.name} — фото ${i + 1}`" class="h-full w-full object-cover" />
+            <img v-img-fallback :src="img" :alt="`${product.name} — фото ${i + 1}`" class="h-full w-full object-cover" />
           </button>
         </div>
 
         <div class="relative flex-1 overflow-hidden rounded-xl2 border border-line bg-bg-deep">
-          <img :src="activeImage" :alt="product.name" class="aspect-square w-full object-cover" />
+          <img v-img-fallback :src="activeImage" :alt="product.name" class="aspect-square w-full object-cover" />
         </div>
       </div>
 

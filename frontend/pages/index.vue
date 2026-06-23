@@ -24,43 +24,20 @@ const stats = [
 
 const embroideryKinds = [
   {
-    icon: 'award',
+    image: '/photos/chevron.jpg',
     title: 'Шевроны',
-    text: 'Нашивки V-образной формы: логотип переносится на промежуточный материал, затем на изделие. Оптимально для униформы и спецодежды.',
+    text: 'Нашивки для униформы и спецодежды: логотип переносится на изделие через промежуточный материал.',
   },
   {
-    icon: 'sparkles',
+    image: '/photos/patch.jpg',
     title: 'Нашивки (патчи)',
-    text: 'Вышивка на специальном материале с дальнейшим переносом на изделие. Используются в корпоративном мерче и как самостоятельный принт.',
+    text: 'Вышивка на специальном материале для корпоративного мерча и как самостоятельный принт.',
   },
   {
-    icon: 'needle',
+    image: '/photos/fabric.jpg',
     title: 'Вышивка на ткани',
-    text: 'На толстовках, худи, кепках, спортивных сумках и других изделиях. Качественное нанесение логотипов на современном оборудовании.',
+    text: 'Логотипы на толстовках, худи, кепках и сумках на современном промышленном оборудовании.',
   },
-]
-
-const services = [
-  'Вышивка на футболке',
-  'Худи с вышивкой',
-  'Вышивка на кепке',
-  'Спецодежда и униформа',
-  'Домашний текстиль',
-  'Шопперы и сумки',
-]
-
-const advantages = [
-  { icon: 'needle', title: 'Современное оборудование', text: 'Работаем на промышленных вышивальных машинах: точность и долговечность каждого стежка.' },
-  { icon: 'sparkles', title: 'Индивидуальный подход', text: 'Помогаем с дизайном, цветом и материалами — результат соответствует ожиданиям.' },
-  { icon: 'scissors', title: 'Широкий спектр услуг', text: 'Логотипы, имена, орнаменты, шевроны и сложные художественные работы.' },
-  { icon: 'clock', title: 'Оперативность и надёжность', text: 'Соблюдаем сроки и бережно относимся к каждому заказу.' },
-]
-
-const steps = [
-  { n: '01', title: 'Заявка и макет', text: 'Присылаете изображение или идею — обсуждаем детали.' },
-  { n: '02', title: 'Расчёт и образец', text: 'Считаем стоимость, согласуем цвета, плотность и материал.' },
-  { n: '03', title: 'Вышивка', text: 'Оцифровка макета и нанесение на промышленном оборудовании.' },
-  { n: '04', title: 'Готово', text: 'Проверяем качество и передаём заказ — в срок.' },
 ]
 
 const clients = ['БУШЕ', '12 STOREEZ', 'USHATÁVA', 'Walk of Shame', 'HENDERSON', 'ЧАЙХОНА №1']
@@ -85,10 +62,10 @@ const clients = ['БУШЕ', '12 STOREEZ', 'USHATÁVA', 'Walk of Shame', 'HENDER
           </p>
 
           <div class="mt-8 flex flex-wrap gap-3">
-            <NuxtLink to="/catalog" class="btn-accent btn-lg">
-              Перейти в каталог <AppIcon name="arrowRight" :size="18" />
+            <NuxtLink to="/services#quote" class="btn-accent btn-lg">
+              Рассчитать вышивку <AppIcon name="arrowRight" :size="18" />
             </NuxtLink>
-            <a href="#quote" class="btn-ghost btn-lg">Узнать стоимость</a>
+            <NuxtLink to="/catalog" class="btn-ghost btn-lg">Перейти в каталог</NuxtLink>
           </div>
 
           <dl class="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-8">
@@ -104,10 +81,11 @@ const clients = ['БУШЕ', '12 STOREEZ', 'USHATÁVA', 'Walk of Shame', 'HENDER
           <div class="grid grid-cols-2 gap-4">
             <div class="space-y-4 pt-8">
               <img
-                src="https://picsum.photos/seed/dariyut-hero-1/600/720"
-                alt="Образец машинной вышивки"
-                width="600"
-                height="720"
+                v-img-fallback
+                src="/photos/hero-1.jpg"
+                alt="Машинная вышивка логотипа на кепке"
+                width="700"
+                height="840"
                 class="aspect-[5/6] w-full rounded-xl2 border border-line object-cover shadow-card"
               />
               <div class="card flex items-center gap-3 p-4">
@@ -129,10 +107,11 @@ const clients = ['БУШЕ', '12 STOREEZ', 'USHATÁVA', 'Walk of Shame', 'HENDER
                 </p>
               </div>
               <img
-                src="https://picsum.photos/seed/dariyut-hero-2/600/760"
-                alt="Готовое изделие с вышивкой"
-                width="600"
-                height="760"
+                v-img-fallback
+                src="/photos/hero-2.jpg"
+                alt="Домашний текстиль с именной вышивкой"
+                width="700"
+                height="840"
                 class="aspect-[5/6] w-full rounded-xl2 border border-line object-cover shadow-card"
               />
             </div>
@@ -141,123 +120,81 @@ const clients = ['БУШЕ', '12 STOREEZ', 'USHATÁVA', 'Walk of Shame', 'HENDER
       </div>
     </section>
 
-    <!-- ─────────────── О компании / виды вышивки ─────────────── -->
+    <!-- ─────────────── Виды вышивки (тизер → /services) ─────────────── -->
     <section id="about" class="relative z-10 border-t border-line bg-cream/40 py-20 sm:py-24">
       <div class="container-x">
-        <p class="eyebrow">01 — о компании</p>
-        <h2 class="mt-4 max-w-2xl font-heading text-[clamp(1.9rem,4vw,2.8rem)] leading-tight">
-          Какие виды вышивки мы производим
-        </h2>
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">что мы делаем</p>
+            <h2 class="mt-4 max-w-2xl font-heading text-[clamp(1.9rem,4vw,2.8rem)] leading-tight">
+              Машинная вышивка под ваши задачи
+            </h2>
+          </div>
+          <NuxtLink
+            to="/services"
+            class="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-forest"
+          >
+            Все услуги и цены
+            <AppIcon name="arrowRight" :size="18" class="transition-transform group-hover:translate-x-1" />
+          </NuxtLink>
+        </div>
 
         <div class="mt-12 grid gap-5 sm:grid-cols-3">
-          <article v-for="k in embroideryKinds" :key="k.title" class="card card-hover p-7">
-            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-forest/8 text-forest">
-              <AppIcon :name="k.icon" :size="24" />
-            </span>
-            <h3 class="mt-5 font-heading text-xl">{{ k.title }}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-muted">{{ k.text }}</p>
-          </article>
-        </div>
-
-        <h3 class="mt-20 font-heading text-2xl text-accent">Почему выбирают нас</h3>
-        <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <article v-for="a in advantages" :key="a.title" class="card card-hover p-6">
-            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/8 text-accent">
-              <AppIcon :name="a.icon" :size="22" />
-            </span>
-            <h4 class="mt-4 font-heading text-lg">{{ a.title }}</h4>
-            <p class="mt-2.5 text-sm leading-relaxed text-muted">{{ a.text }}</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ───────────────────── Как мы работаем ──────────────────── -->
-    <section class="relative z-10 py-20 sm:py-24">
-      <div class="container-x">
-        <div class="max-w-2xl">
-          <p class="eyebrow">процесс</p>
-          <h2 class="mt-4 font-heading text-[clamp(1.9rem,4vw,2.8rem)] leading-tight">
-            Как мы работаем над заказом
-          </h2>
-        </div>
-
-        <ol class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <li v-for="(step, i) in steps" :key="step.n" class="relative">
-            <div class="flex items-center gap-3">
-              <span class="font-heading text-4xl text-forest/25">{{ step.n }}</span>
-              <span v-if="i < steps.length - 1" class="hidden h-px flex-1 stitch lg:block" />
+          <NuxtLink
+            v-for="k in embroideryKinds"
+            :key="k.title"
+            to="/services"
+            class="card card-hover group overflow-hidden"
+          >
+            <div class="relative aspect-[16/10] overflow-hidden border-b border-line">
+              <img
+                v-img-fallback
+                :src="k.image"
+                :alt="k.title"
+                width="800"
+                height="500"
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              />
             </div>
-            <h3 class="mt-4 font-heading text-lg">{{ step.title }}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{{ step.text }}</p>
-          </li>
-        </ol>
+            <div class="p-7 pt-5">
+              <h3 class="font-heading text-xl">{{ k.title }}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-muted">{{ k.text }}</p>
+            </div>
+          </NuxtLink>
+        </div>
       </div>
     </section>
 
-    <!-- ───────────────────── Услуги и прайс ───────────────────── -->
-    <section id="services" class="relative z-10 border-t border-line bg-cream/40 py-20 sm:py-24">
-      <div class="container-x grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-center">
-        <div>
-          <p class="eyebrow">02 — услуги и прайс</p>
-          <h2 class="mt-4 font-heading text-[clamp(1.9rem,4vw,2.8rem)] leading-tight">
-            Услуги и стоимость
-          </h2>
-          <p class="mt-5 max-w-xl text-lg leading-relaxed text-muted">
-            Цена формируется индивидуально и зависит от макета, тиража и материала.
-            Пришлите детали — рассчитаем стоимость и сроки.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-2.5">
-            <span v-for="srv in services" :key="srv" class="chip cursor-default">{{ srv }}</span>
+    <!-- ───────────────── CTA: расчёт стоимости ───────────────── -->
+    <section class="relative z-10 py-16 sm:py-20">
+      <div class="container-x">
+        <div class="relative overflow-hidden rounded-xl3 border border-line bg-white p-8 shadow-card sm:p-12">
+          <div class="grid gap-6 sm:grid-cols-[1.4fr_1fr] sm:items-center">
+            <div>
+              <p class="eyebrow">расчёт стоимости</p>
+              <h2 class="mt-4 font-heading text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight">
+                Пришлите макет — рассчитаем за день
+              </h2>
+              <p class="mt-3 max-w-md text-muted">
+                Оценим тираж, материал и сроки. Бесплатно и ни к чему не обязывает.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3 sm:justify-end">
+              <NuxtLink to="/services#quote" class="btn-accent btn-lg">
+                Получить расчёт <AppIcon name="arrowRight" :size="18" />
+              </NuxtLink>
+              <a :href="site.phoneHref" class="btn-ghost btn-lg">
+                <AppIcon name="phone" :size="18" /> Позвонить
+              </a>
+            </div>
           </div>
         </div>
-        <div class="card relative overflow-hidden p-8 text-center">
-          <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-forest/10 text-forest">
-            <AppIcon name="sparkles" :size="26" />
-          </span>
-          <p class="mt-5 font-heading text-2xl">Нужен расчёт?</p>
-          <p class="mt-3 text-sm text-muted">
-            Ответим быстро: макет, тираж, материал — и вы получите цифры.
-          </p>
-          <a href="#quote" class="btn-primary mt-6 w-full">Получить расчёт</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────── Форма расчёта стоимости ──────────────── -->
-    <section id="quote" class="relative z-10 py-20 sm:py-24">
-      <div class="container-x grid gap-10 lg:grid-cols-[0.85fr_1fr] lg:items-start">
-        <div class="lg:sticky lg:top-24">
-          <p class="eyebrow">расчёт стоимости</p>
-          <h2 class="mt-4 font-heading text-[clamp(1.9rem,4vw,2.8rem)] leading-tight">
-            Пришлите макет — рассчитаем за день
-          </h2>
-          <p class="mt-5 max-w-md text-lg leading-relaxed text-muted">
-            Опишите задачу и приложите изображение или эскиз. Подберём материал,
-            оценим тираж и сроки, согласуем цвета нитей.
-          </p>
-          <ul class="mt-7 space-y-3 text-sm">
-            <li class="flex items-center gap-3">
-              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-forest/10 text-forest"><AppIcon name="clock" :size="18" /></span>
-              Ответ в течение рабочего дня
-            </li>
-            <li class="flex items-center gap-3">
-              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-forest/10 text-forest"><AppIcon name="award" :size="18" /></span>
-              Бесплатная оценка и консультация
-            </li>
-            <li class="flex items-center gap-3">
-              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-forest/10 text-forest"><AppIcon name="package" :size="18" /></span>
-              Тираж от 1 шт., ОПТ от 20 шт.
-            </li>
-          </ul>
-        </div>
-
-        <QuoteForm />
       </div>
     </section>
 
     <!-- ──────────────── Готовые изделия / каталог ──────────────── -->
-    <section class="relative z-10 py-20 sm:py-24">
+    <section class="relative z-10 py-16 sm:py-20">
       <div class="container-x">
         <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>

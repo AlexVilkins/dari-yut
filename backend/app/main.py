@@ -1,14 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqladmin import Admin
+from fastapi.staticfiles import StaticFiles
 
+from app.admin.app import MediaAdmin
 from app.admin.auth import AdminAuth
 from app.admin.views import ADMIN_VIEWS
 from app.api.routers import auth, orders, products
 from app.core.config import settings
+from app.core.storage import MEDIA_ROOT, ensure_media_dirs
 from app.db.session import engine
 
 app = FastAPI(title=settings.PROJECT_NAME)
+
+# Загруженные файлы (изображения товаров) раздаются как статика.
+ensure_media_dirs()
+app.mount(settings.MEDIA_URL, StaticFiles(directory=MEDIA_ROOT), name="media")
 
 app.add_middleware(
     CORSMiddleware,
@@ -30,7 +36,7 @@ def health():
 
 
 # Админка SQLAdmin на /admin (вход по роли admin).
-admin = Admin(
+admin = MediaAdmin(
     app,
     engine,
     title="Дари Уют — админка",
