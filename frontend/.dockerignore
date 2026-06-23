@@ -1,0 +1,10 @@
+node_modules/
+.nuxt/
+.output/
+.data/
+dist/
+.env
+*.log
+nuxt-dev.log
+.git/
+README.md
