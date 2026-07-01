@@ -36,10 +36,10 @@ async function submit() {
       <aside class="relative hidden flex-col justify-between overflow-hidden bg-forest p-10 text-cream lg:flex">
         <div class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
         <div class="relative">
-          <span class="flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 bg-cream/10 font-heading text-2xl">Д</span>
-          <p class="mt-6 font-heading text-3xl leading-tight">С возвращением в&nbsp;«Дари&nbsp;Уют»</p>
+          <span class="flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 bg-cream/10 font-heading text-2xl">М</span>
+          <p class="mt-6 font-heading text-3xl leading-tight">С возвращением в&nbsp;«Махровый&nbsp;Мир»</p>
           <p class="mt-3 max-w-xs text-cream/70">
-            Войдите, чтобы оформить заявку и следить за статусом своих заказов.
+            Войдите, чтобы оформить оптовую заявку и следить за статусом заказов.
           </p>
         </div>
         <ul class="relative space-y-3 text-sm text-cream/85">

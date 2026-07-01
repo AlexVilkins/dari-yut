@@ -12,7 +12,7 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
 
-    PROJECT_NAME: str = "Дари Уют API"
+    PROJECT_NAME: str = "Махровый Мир API"
 
     # Параметры запуска uvicorn (используются при `python -m app.main`).
     HOST: str = "127.0.0.1"

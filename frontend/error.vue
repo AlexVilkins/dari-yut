@@ -21,7 +21,7 @@ const goCatalog = () => clearError({ redirect: '/catalog' })
   <div class="grain flex min-h-dvh flex-col bg-bg text-fg">
     <header class="border-b border-line">
       <div class="container-x flex h-16 items-center">
-        <NuxtLink to="/" class="text-forest" aria-label="Дари Уют — на главную">
+        <NuxtLink to="/" class="text-forest" aria-label="Махровый Мир — на главную">
           <AppLogo variant="full" :size="40" />
         </NuxtLink>
       </div>

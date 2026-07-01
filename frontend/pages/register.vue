@@ -36,14 +36,14 @@ async function submit() {
       <aside class="relative hidden flex-col justify-between overflow-hidden bg-forest p-10 text-cream lg:flex">
         <div class="pointer-events-none absolute -bottom-16 -left-12 h-56 w-56 rounded-full bg-accent/20 blur-3xl" />
         <div class="relative">
-          <span class="flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 bg-cream/10 font-heading text-2xl">Д</span>
+          <span class="flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 bg-cream/10 font-heading text-2xl">М</span>
           <p class="mt-6 font-heading text-3xl leading-tight">Создайте аккаунт</p>
           <p class="mt-3 max-w-xs text-cream/70">
-            Регистрация занимает минуту и нужна только для отправки заявки на изделие.
+            Регистрация занимает минуту и нужна только для отправки оптовой заявки.
           </p>
         </div>
         <blockquote class="relative border-l-2 border-accent/60 pl-4 text-sm italic text-cream/85">
-          «Когда каждая деталь имеет значение» — делаем вышивку, которой хочется любоваться.
+          «Мягкость, тепло и уют — оптом» — махровые изделия от производителя.
         </blockquote>
       </aside>
 
@@ -63,7 +63,7 @@ async function submit() {
           </div>
           <div>
             <label class="label" for="phone">Телефон</label>
-            <input id="phone" v-model="form.phone" class="field" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" />
+            <input id="phone" v-model="form.phone" v-phone class="field" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" />
           </div>
           <div>
             <label class="label" for="password">Пароль</label>
