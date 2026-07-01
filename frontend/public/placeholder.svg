@@ -1,18 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Дари Уют">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Махровое изделие">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fbf7ef"/>
-      <stop offset="1" stop-color="#f1e8d8"/>
+      <stop offset="0" stop-color="#fbf7f1"/>
+      <stop offset="1" stop-color="#f0e9dd"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <g fill="none" stroke="#1f4d43" stroke-opacity="0.28" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-    <!-- иголка с нитью -->
-    <path d="M300 500 L470 330"/>
-    <path d="M455 300 L500 345 L470 375 L425 330 Z"/>
-    <path d="M440 330 L470 360"/>
-    <!-- декоративная строчка -->
-    <path d="M250 560 h300" stroke-dasharray="18 14"/>
+  <g transform="translate(400 360)">
+    <!-- стопка сложенных полотенец -->
+    <g>
+      <rect x="-150" y="-70" width="300" height="70" rx="35" fill="#136a63" fill-opacity="0.85"/>
+      <rect x="-150" y="10" width="300" height="70" rx="35" fill="#136a63" fill-opacity="0.6"/>
+      <rect x="-150" y="90" width="300" height="70" rx="35" fill="#136a63" fill-opacity="0.4"/>
+      <rect x="70" y="-70" width="26" height="70" fill="#c96a48" fill-opacity="0.9"/>
+      <rect x="70" y="10" width="26" height="70" fill="#c96a48" fill-opacity="0.75"/>
+      <rect x="70" y="90" width="26" height="70" fill="#c96a48" fill-opacity="0.55"/>
+    </g>
   </g>
-  <text x="400" y="630" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="46" fill="#1f4d43" fill-opacity="0.55" font-style="italic">Дари Уют</text>
+  <text x="400" y="560" text-anchor="middle" font-family="'Onest', system-ui, sans-serif" font-size="30" letter-spacing="6" fill="#136a63" fill-opacity="0.8">МАХРОВЫЙ МИР</text>
+  <text x="400" y="602" text-anchor="middle" font-family="'Onest', system-ui, sans-serif" font-size="19" letter-spacing="2" fill="#136a63" fill-opacity="0.5">махровые изделия оптом</text>
 </svg>

@@ -17,7 +17,7 @@ useSeoMeta({ title: 'Корзина', robots: 'noindex' })
         </span>
         <p class="mt-5 font-heading text-xl">В корзине пока пусто</p>
         <p class="mx-auto mt-2 max-w-sm text-sm text-muted">
-          Загляните в каталог — там текстиль с индивидуальной вышивкой на любой случай.
+          Загляните в каталог — там махровые полотенца, халаты и простыни оптом.
         </p>
         <NuxtLink to="/catalog" class="btn-primary mt-6">
           Перейти в каталог <AppIcon name="arrowRight" :size="18" />

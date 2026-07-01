@@ -30,10 +30,10 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Профессиональная машинная вышивка в Санкт-Петербурге: корпоративная символика, подарки, домашний текстиль. Опыт 5+ лет, тираж и единичные заказы.',
+            'Махровый Мир — махровые изделия оптом от производителя: банные и кухонные полотенца, халаты, махровые простыни. Опт для отелей, спа, ресторанов и маркетплейсов. Отгрузка по всей России.',
         },
-        { name: 'theme-color', content: '#1f4d43' },
-        { property: 'og:site_name', content: 'Дари Уют' },
+        { name: 'theme-color', content: '#136a63' },
+        { property: 'og:site_name', content: 'Махровый Мир' },
         { property: 'og:locale', content: 'ru_RU' },
       ],
       link: [
@@ -50,13 +50,13 @@ export default defineNuxtConfig({
           type: 'application/ld+json',
           innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            name: 'Дари Уют',
+            '@type': 'Organization',
+            name: 'Махровый Мир',
             description:
-              'Профессиональная машинная вышивка в Санкт-Петербурге. Корпоративная символика, подарки, текстиль, шевроны. Опыт 5+ лет.',
-            url: 'https://дари-уют.рф',
+              'Оптовый поставщик махровых изделий: банные и кухонные полотенца, халаты, махровые простыни. Опт для отелей, спа, ресторанов и маркетплейсов.',
+            url: 'https://махровый-мир.рф',
             telephone: '+7 (921) 579-78-76',
-            email: 'dari_yut@mail.ru',
+            email: 'opt@mahrovy-mir.ru',
             address: {
               '@type': 'PostalAddress',
               streetAddress: 'пр-т Обуховской обороны 86 лит.3',
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
               addressCountry: 'RU',
             },
             geo: { '@type': 'GeoCoordinates', latitude: 59.8867, longitude: 30.4691 },
-            image: 'https://дари-уют.рф/logo/logo.png',
+            image: 'https://махровый-мир.рф/favicon.svg',
             priceRange: '₽₽',
           }),
         },

@@ -45,9 +45,9 @@ const sizeError = ref(false)
 const quantity = ref(1)
 
 const trust = [
-  { icon: 'needle', title: 'Ручная вышивка', text: 'Точное нанесение под ваш макет' },
-  { icon: 'truck', title: 'Доставка по РФ', text: 'Согласуем после оформления' },
-  { icon: 'shield', title: 'Контроль качества', text: 'Проверяем каждый заказ' },
+  { icon: 'leaf', title: '100% хлопок', text: 'Мягкость и стойкий цвет' },
+  { icon: 'percent', title: 'Оптовые цены', text: 'Дешевле при большем объёме' },
+  { icon: 'truck', title: 'Отгрузка по РФ', text: 'Самовывоз, курьер или ТК' },
 ]
 
 function addToCart() {

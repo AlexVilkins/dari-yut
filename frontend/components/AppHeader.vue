@@ -1,53 +1,57 @@
 <script setup lang="ts">
-import type { Category } from '~/types'
+import type { Category } from "~/types";
 
-const { site } = useAppConfig()
-const cart = useCartStore()
-const auth = useAuthStore()
-const route = useRoute()
-const cartDrawer = useCartDrawer()
+const { site } = useAppConfig();
+const cart = useCartStore();
+const auth = useAuthStore();
+const route = useRoute();
+const cartDrawer = useCartDrawer();
 
-const mobileOpen = ref(false)
-const scrolled = ref(false)
+const mobileOpen = ref(false);
+const scrolled = ref(false);
 
 // Категории для выпадающего меню «Каталог» (кешируются общим ключом).
-const { data: categories } = await useApiFetch<Category[]>('/categories', {
-  key: 'categories',
-})
+const { data: categories } = await useApiFetch<Category[]>("/categories", {
+  key: "categories",
+});
 
-// Разделы: услуги, каталог, доставка, контакты. У «Каталога» — мега-меню.
+// Разделы: оптовикам, каталог, доставка, контакты. У «Каталога» — мега-меню.
 const navLinks = [
-  { label: 'Услуги', to: '/services' },
-  { label: 'Каталог', to: '/catalog', mega: true },
-  { label: 'Доставка', to: '/delivery' },
-  { label: 'Контакты', to: '/#contact' },
-]
+  { label: "Оптовикам", to: "/services" },
+  { label: "Каталог", to: "/catalog", mega: true },
+  { label: "Доставка", to: "/delivery" },
+  { label: "Контакты", to: "/#contact" },
+];
 
 // Подсветка активного раздела по текущему пути / якорю.
 function isActive(link: { to: string }) {
-  if (link.to === '/services') return route.path.startsWith('/services')
-  if (link.to === '/catalog') return route.path.startsWith('/catalog')
-  if (link.to === '/delivery') return route.path.startsWith('/delivery')
-  if (link.to === '/#contact') return route.path === '/' && route.hash === '#contact'
-  return false
+  if (link.to === "/services") return route.path.startsWith("/services");
+  if (link.to === "/catalog") return route.path.startsWith("/catalog");
+  if (link.to === "/delivery") return route.path.startsWith("/delivery");
+  if (link.to === "/#contact")
+    return route.path === "/" && route.hash === "#contact";
+  return false;
 }
 
 function onScroll() {
-  scrolled.value = window.scrollY > 8
+  scrolled.value = window.scrollY > 8;
 }
 onMounted(() => {
-  onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
-})
-onUnmounted(() => window.removeEventListener('scroll', onScroll))
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+});
+onUnmounted(() => window.removeEventListener("scroll", onScroll));
 
 // Закрываем мобильное меню при любой смене маршрута.
-watch(() => route.fullPath, () => (mobileOpen.value = false))
+watch(
+  () => route.fullPath,
+  () => (mobileOpen.value = false),
+);
 
 async function onLogout() {
-  auth.logout()
-  mobileOpen.value = false
-  await navigateTo('/')
+  auth.logout();
+  mobileOpen.value = false;
+  await navigateTo("/");
 }
 </script>
 
@@ -61,8 +65,17 @@ async function onLogout() {
     "
   >
     <div class="container-x flex h-16 items-center justify-between gap-4">
-      <NuxtLink to="/" class="group shrink-0 text-forest" aria-label="Дари Уют — на главную" @click="mobileOpen = false">
-        <AppLogo variant="full" :size="44" class="transition-transform duration-300 group-hover:-rotate-3" />
+      <NuxtLink
+        to="/"
+        class="group shrink-0 text-forest"
+        aria-label="Махровый Мир — на главную"
+        @click="mobileOpen = false"
+      >
+        <AppLogo
+          variant="full"
+          :size="44"
+          class="transition-transform duration-300 group-hover:-rotate-3"
+        />
       </NuxtLink>
 
       <!-- Desktop nav -->
@@ -80,7 +93,11 @@ async function onLogout() {
               "
             >
               {{ link.label }}
-              <AppIcon name="chevronRight" :size="14" class="rotate-90 transition-transform group-hover:translate-y-0.5" />
+              <AppIcon
+                name="chevronRight"
+                :size="14"
+                class="rotate-90 transition-transform group-hover:translate-y-0.5"
+              />
               <span
                 v-if="isActive(link)"
                 class="absolute inset-x-3.5 -bottom-px h-0.5 rounded-full bg-accent"
@@ -136,12 +153,15 @@ async function onLogout() {
         <!-- Телефон + CTA «Рассчитать» -->
         <a
           :href="site.phoneHref"
-          class="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-fg transition-colors hover:bg-line/60 xl:inline-flex"
+          class="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-nowrap text-fg transition-colors hover:bg-line/60 xl:inline-flex"
         >
           <AppIcon name="phone" :size="17" /> {{ site.phone }}
         </a>
-        <NuxtLink to="/services#quote" class="btn-accent hidden lg:inline-flex">
-          Рассчитать
+        <NuxtLink
+          to="/services#quote"
+          class="btn-accent hidden lg:inline-flex text-nowrap"
+        >
+          Опт-прайс
         </NuxtLink>
 
         <ClientOnly>
@@ -183,7 +203,11 @@ async function onLogout() {
           >
             <AppIcon name="logout" :size="19" />
           </button>
-          <NuxtLink v-else to="/login" class="btn-ghost ml-1 hidden sm:inline-flex">
+          <NuxtLink
+            v-else
+            to="/login"
+            class="btn-ghost ml-1 hidden sm:inline-flex"
+          >
             <AppIcon name="user" :size="18" />
             Войти
           </NuxtLink>
@@ -228,8 +252,13 @@ async function onLogout() {
           </NuxtLink>
 
           <!-- Категории каталога -->
-          <div v-if="categories?.length" class="mt-1 rounded-lg bg-bg-deep/40 p-2">
-            <p class="px-2 py-1 text-xs uppercase tracking-wider text-muted">Категории</p>
+          <div
+            v-if="categories?.length"
+            class="mt-1 rounded-lg bg-bg-deep/40 p-2"
+          >
+            <p class="px-2 py-1 text-xs uppercase tracking-wider text-muted">
+              Категории
+            </p>
             <div class="flex flex-wrap gap-2 px-1 pt-1">
               <NuxtLink
                 v-for="c in categories"
@@ -245,7 +274,10 @@ async function onLogout() {
 
           <div class="my-2 h-px stitch" />
 
-          <a :href="site.phoneHref" class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm hover:bg-bg-deep">
+          <a
+            :href="site.phoneHref"
+            class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm hover:bg-bg-deep"
+          >
             <AppIcon name="phone" :size="18" /> {{ site.phone }}
           </a>
           <NuxtLink
@@ -253,7 +285,7 @@ async function onLogout() {
             class="btn-accent mt-2"
             @click="mobileOpen = false"
           >
-            Рассчитать стоимость
+            Запросить опт-прайс
           </NuxtLink>
 
           <div class="my-2 h-px stitch" />

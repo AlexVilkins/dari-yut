@@ -9,6 +9,7 @@ from wtforms import Form
 from app.core.storage import save_product_image
 from app.models.order import Order, OrderItem
 from app.models.product import Category, Product
+from app.models.quote import Quote
 from app.models.user import User
 
 
@@ -150,6 +151,50 @@ class OrderItemAdmin(ModelView, model=OrderItem):
     can_delete = False
 
 
+class QuoteAdmin(ModelView, model=Quote):
+    name = "Заявка на прайс"
+    name_plural = "Заявки на прайс"
+    icon = "fa-solid fa-file-invoice-dollar"
+    column_list = [
+        Quote.id,
+        Quote.name,
+        Quote.phone,
+        Quote.company,
+        Quote.product,
+        Quote.quantity,
+        Quote.status,
+        Quote.created_at,
+    ]
+    column_details_list = [
+        Quote.id,
+        Quote.name,
+        Quote.phone,
+        Quote.company,
+        Quote.product,
+        Quote.quantity,
+        Quote.comment,
+        Quote.status,
+        Quote.created_at,
+    ]
+    column_searchable_list = [Quote.name, Quote.phone, Quote.company]
+    column_sortable_list = [Quote.id, Quote.created_at, Quote.status]
+    column_default_sort = [(Quote.created_at, True)]
+    # Менеджер обрабатывает лид — меняет статус и оставляет комментарий.
+    form_columns = [Quote.status, Quote.comment]
+    can_create = False
+    can_delete = False
+    column_labels = {
+        Quote.name: "Имя",
+        Quote.phone: "Телефон",
+        Quote.company: "Компания",
+        Quote.product: "Ассортимент",
+        Quote.quantity: "Объём партии",
+        Quote.comment: "Комментарий",
+        Quote.status: "Статус",
+        Quote.created_at: "Создана",
+    }
+
+
 class UserAdmin(ModelView, model=User):
     name = "Пользователь"
     name_plural = "Пользователи"
@@ -172,5 +217,6 @@ ADMIN_VIEWS = [
     CategoryAdmin,
     OrderAdmin,
     OrderItemAdmin,
+    QuoteAdmin,
     UserAdmin,
 ]
