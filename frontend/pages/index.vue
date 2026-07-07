@@ -293,15 +293,15 @@ const clients = ['Отели', 'Гостиницы', 'Спа и сауны', 'Р
           <p class="eyebrow">контакты</p>
           <h2 class="mt-4 font-heading text-[clamp(1.9rem,4vw,2.8rem)]">Связаться с нами</h2>
           <p class="mt-5 max-w-md text-lg leading-relaxed text-muted">
-            Обсудим ассортимент, объём и цену. Пишите в Telegram или звоните —
+            Обсудим ассортимент, объём и цену. Пишите в MAX или звоните —
             ответим в течение рабочего дня.
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a :href="site.phoneHref" class="btn-primary">
               <AppIcon name="phone" :size="18" /> {{ site.phone }}
             </a>
-            <a :href="site.telegram" target="_blank" rel="noopener" class="btn-ghost">
-              <AppIcon name="telegram" :size="18" /> Telegram
+            <a :href="site.max" target="_blank" rel="noopener" class="btn-ghost">
+              <AppIcon name="max" :size="18" /> MAX
             </a>
           </div>
         </div>

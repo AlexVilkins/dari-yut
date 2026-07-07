@@ -32,8 +32,8 @@ const year = new Date().getFullYear()
             <a :href="site.phoneHref" class="btn-accent btn-lg">
               <AppIcon name="phone" :size="18" /> Позвонить
             </a>
-            <a :href="site.telegram" target="_blank" rel="noopener" class="btn-ghost btn-lg bg-cream/10 text-cream hover:bg-cream/20">
-              <AppIcon name="telegram" :size="18" /> Telegram
+            <a :href="site.max" target="_blank" rel="noopener" class="btn-ghost btn-lg bg-cream/10 text-cream hover:bg-cream/20">
+              <AppIcon name="max" :size="18" /> MAX
             </a>
           </div>
         </div>
@@ -75,8 +75,8 @@ const year = new Date().getFullYear()
               </a>
             </li>
             <li>
-              <a :href="site.telegram" target="_blank" rel="noopener" class="inline-flex items-center gap-2 transition-colors hover:text-forest">
-                <AppIcon name="telegram" :size="16" /> Telegram
+              <a :href="site.max" target="_blank" rel="noopener" class="inline-flex items-center gap-2 transition-colors hover:text-forest">
+                <AppIcon name="max" :size="16" /> MAX
               </a>
             </li>
           </ul>

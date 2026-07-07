@@ -161,7 +161,7 @@
     background:
       radial-gradient(55% 50% at 18% 20%, rgba(19, 106, 99, 0.14), transparent 70%),
       radial-gradient(50% 45% at 85% 25%, rgba(201, 106, 72, 0.1), transparent 70%),
-      linear-gradient(180deg, #fbf7f1 0%, #f0e9dd 100%);
+      linear-gradient(180deg, #d8ece7 0%, #c3e0d9 100%);
   }
 
   /* Тонкая «бумажная» зернистость поверх фона — премиальная фактура */

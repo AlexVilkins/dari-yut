@@ -114,7 +114,7 @@ const faq = [
           </p>
           <div class="mt-7 flex flex-wrap gap-3">
             <a :href="site.phoneHref" class="btn-primary"><AppIcon name="phone" :size="18" /> {{ site.phone }}</a>
-            <a :href="site.telegram" target="_blank" rel="noopener" class="btn-ghost"><AppIcon name="telegram" :size="18" /> Telegram</a>
+            <a :href="site.max" target="_blank" rel="noopener" class="btn-ghost"><AppIcon name="max" :size="18" /> MAX</a>
           </div>
         </div>
 
