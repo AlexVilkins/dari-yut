@@ -7,9 +7,9 @@ export default defineAppConfig({
     slogan: 'Мягкость, тепло и уют — оптом',
     phone: '+7 (921) 579-78-76',
     phoneHref: 'tel:+79215797876',
-    email: 'opt@mahrovy-mir.ru',
+    email: 'dari_yut@mail.ru',
     address: 'пр-т Обуховской обороны 86 лит.3, Санкт-Петербург',
-    telegram: 'https://t.me/+79214227251',
+    max: 'https://max.ru/+79215797876',
     url: 'https://махровый-мир.рф',
     // Минимальный объём для оптового заказа.
     minWholesale: 'от 20 шт.',

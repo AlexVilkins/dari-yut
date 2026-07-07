@@ -56,7 +56,7 @@ export default defineNuxtConfig({
               'Оптовый поставщик махровых изделий: банные и кухонные полотенца, халаты, махровые простыни. Опт для отелей, спа, ресторанов и маркетплейсов.',
             url: 'https://махровый-мир.рф',
             telephone: '+7 (921) 579-78-76',
-            email: 'opt@mahrovy-mir.ru',
+            email: 'dari_yut@mail.ru',
             address: {
               '@type': 'PostalAddress',
               streetAddress: 'пр-т Обуховской обороны 86 лит.3',

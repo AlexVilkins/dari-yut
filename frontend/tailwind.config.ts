@@ -8,11 +8,12 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       colors: {
-        cream: '#fbf6ee',
-        bg: '#fbf7f1',
-        'bg-deep': '#f0e9dd',
+        cream: '#e7f3f0',
+        // Фон сайта в приглушённой, но более насыщенной бирюзе (спа) — в тон бренду.
+        bg: '#d8ece7',
+        'bg-deep': '#c3e0d9',
         fg: '#1f1c19',
-        line: '#e9e0d2',
+        line: '#aed6cd',
         muted: '#8b8377',
         // «forest» → спа-бирюза (основной цвет бренда).
         forest: '#136a63',
