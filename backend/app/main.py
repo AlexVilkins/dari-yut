@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from app.admin.app import MediaAdmin
 from app.admin.auth import AdminAuth
 from app.admin.views import ADMIN_VIEWS
-from app.api.routers import auth, orders, products
+from app.api.routers import auth, orders, products, quotes
 from app.core.config import settings
 from app.core.storage import MEDIA_ROOT, ensure_media_dirs
 from app.db.session import engine
@@ -28,6 +28,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(products.router)
 app.include_router(orders.router)
+app.include_router(quotes.router)
 
 
 @app.get("/health", tags=["meta"])
@@ -39,7 +40,7 @@ def health():
 admin = MediaAdmin(
     app,
     engine,
-    title="Дари Уют — админка",
+    title="Махровый Мир — админка",
     authentication_backend=AdminAuth(secret_key=settings.SECRET_KEY),
 )
 for view in ADMIN_VIEWS:

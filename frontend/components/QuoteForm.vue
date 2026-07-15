@@ -1,11 +1,13 @@
 <script setup lang="ts">
-// Форма «Рассчитать стоимость» с загрузкой макета.
-// MOCK: ничего не отправляет на сервер — показывает тост. Заменить на POST /quotes.
+// Форма «Запросить опт-прайс»: сохраняет заявку через POST /quotes.
+// Заявки видит менеджер в админке (раздел «Заявки на прайс»).
 const toast = useToast()
+const api = useApi()
 
 const form = reactive({
   name: '',
   phone: '',
+  company: '',
   product: '',
   quantity: '',
   comment: '',
@@ -17,13 +19,13 @@ const submitting = ref(false)
 const errorMsg = ref('')
 
 const products = [
-  'Футболка / поло',
-  'Худи / свитшот',
-  'Кепка',
-  'Спецодежда',
-  'Домашний текстиль',
-  'Шоппер / сумка',
-  'Другое',
+  'Банные полотенца',
+  'Кухонные полотенца',
+  'Махровые халаты',
+  'Махровые простыни',
+  'Гостиничный текстиль',
+  'Подарочные наборы',
+  'Смешанный ассортимент',
 ]
 
 function onFileChange(e: Event) {
@@ -61,15 +63,30 @@ async function submit() {
   }
   submitting.value = true
   try {
-    // MOCK: имитируем отправку.
-    await new Promise((r) => setTimeout(r, 500))
-    toast.success('Заявка на расчёт отправлена — перезвоним в течение дня')
+    await api('/quotes', {
+      method: 'POST',
+      body: {
+        name: form.name,
+        phone: form.phone,
+        company: form.company,
+        product: form.product,
+        quantity: form.quantity,
+        comment: form.comment,
+      },
+    })
+    toast.success('Заявка на опт-прайс отправлена — перезвоним в течение дня')
     form.name = ''
     form.phone = ''
+    form.company = ''
     form.product = ''
     form.quantity = ''
     form.comment = ''
     file.value = null
+  } catch (e: any) {
+    errorMsg.value =
+      e?.data?.detail?.[0]?.msg ||
+      e?.data?.detail ||
+      'Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.'
   } finally {
     submitting.value = false
   }
@@ -85,29 +102,36 @@ async function submit() {
       </div>
       <div>
         <label class="label" for="q-phone">Телефон <span class="text-accent">*</span></label>
-        <input id="q-phone" v-model="form.phone" class="field" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" />
+        <input id="q-phone" v-model="form.phone" v-phone class="field" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" />
       </div>
       <div>
-        <label class="label" for="q-product">Изделие</label>
-        <select id="q-product" v-model="form.product" class="field">
-          <option value="">Не выбрано</option>
-          <option v-for="p in products" :key="p" :value="p">{{ p }}</option>
-        </select>
+        <label class="label" for="q-company">Компания</label>
+        <input id="q-company" v-model="form.company" class="field" type="text" autocomplete="organization" placeholder="Отель, магазин, ИП…" />
       </div>
       <div>
-        <label class="label" for="q-qty">Тираж, шт.</label>
-        <input id="q-qty" v-model="form.quantity" class="field" type="number" min="1" inputmode="numeric" placeholder="например, 50" />
+        <label class="label" for="q-qty">Объём партии, шт.</label>
+        <input id="q-qty" v-model="form.quantity" class="field" type="number" min="1" inputmode="numeric" placeholder="например, 200" />
+      </div>
+      <div class="sm:col-span-2">
+        <label class="label" for="q-product">Интересующий ассортимент</label>
+        <AppSelect
+          id="q-product"
+          v-model="form.product"
+          :options="products"
+          placeholder="Не выбрано"
+          aria-label="Интересующий ассортимент"
+        />
       </div>
     </div>
 
     <div class="mt-5">
       <label class="label" for="q-comment">Комментарий</label>
-      <textarea id="q-comment" v-model="form.comment" class="field min-h-20" placeholder="Цвета, материал, сроки, пожелания по макету…" />
+      <textarea id="q-comment" v-model="form.comment" class="field min-h-20" placeholder="Позиции, плотность, цвета, сроки, требования к упаковке…" />
     </div>
 
-    <!-- Загрузка макета -->
+    <!-- Вложение: список позиций / бриф -->
     <div class="mt-5">
-      <span class="label">Макет (необязательно)</span>
+      <span class="label">Список или бриф (необязательно)</span>
       <label
         class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl2 border-2 border-dashed px-4 py-7 text-center transition-colors"
         :class="dragOver ? 'border-forest bg-forest/5' : 'border-line bg-bg-deep/40 hover:border-forest/40'"
@@ -126,9 +150,9 @@ async function submit() {
         </template>
         <template v-else>
           <span class="text-sm text-fg">Перетащите файл сюда или <span class="text-forest underline">выберите</span></span>
-          <span class="text-xs text-muted">PNG, JPG, PDF до 10 МБ</span>
+          <span class="text-xs text-muted">PDF, XLSX, DOCX, изображения — до 10 МБ</span>
         </template>
-        <input type="file" class="sr-only" accept="image/*,.pdf" @change="onFileChange" />
+        <input type="file" class="sr-only" accept="image/*,.pdf,.xlsx,.xls,.doc,.docx,.csv" @change="onFileChange" />
       </label>
     </div>
 
@@ -138,7 +162,7 @@ async function submit() {
 
     <button class="btn-accent btn-lg mt-6 w-full" type="submit" :disabled="submitting">
       <AppIcon v-if="!submitting" name="send" :size="18" />
-      {{ submitting ? 'Отправляем…' : 'Отправить заявку на расчёт' }}
+      {{ submitting ? 'Отправляем…' : 'Запросить опт-прайс' }}
     </button>
     <p class="mt-3 text-center text-xs text-muted">
       Нажимая кнопку, вы соглашаетесь на обработку персональных данных.

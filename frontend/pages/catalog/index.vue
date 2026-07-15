@@ -60,7 +60,7 @@ function plural(n: number) {
 useSeoMeta({
   title: computed(() => (activeName.value ? `Каталог — ${activeName.value}` : 'Каталог')),
   description:
-    'Каталог текстиля с индивидуальной вышивкой: полотенца, халаты, пледы, подушки и подарочные наборы.',
+    'Каталог махровых изделий оптом: банные и кухонные полотенца, халаты, махровые простыни, гостиничный текстиль и подарочные наборы.',
 })
 </script>
 
@@ -75,7 +75,7 @@ useSeoMeta({
             <h1 class="font-heading text-[clamp(2rem,5vw,3rem)] leading-tight">
               {{ activeName || 'Каталог' }}
             </h1>
-            <p class="mt-2 text-muted">Текстиль с индивидуальной машинной вышивкой</p>
+            <p class="mt-2 text-muted">Махровые изделия оптом от производителя</p>
           </div>
           <p class="text-sm text-muted">
             <span class="tnum font-medium text-fg">{{ count }}</span> {{ plural(count) }}
@@ -125,9 +125,12 @@ useSeoMeta({
           <AppIcon :name="inStockOnly ? 'check' : 'package'" :size="16" />
           В наличии
         </label>
-        <select v-model="sort" class="field sm:w-56" aria-label="Сортировка">
-          <option v-for="o in sortOptions" :key="o.value" :value="o.value">{{ o.label }}</option>
-        </select>
+        <AppSelect
+          v-model="sort"
+          :options="sortOptions"
+          aria-label="Сортировка"
+          class="sm:w-56"
+        />
       </div>
 
       <!-- Состояния. Transition мягко анимирует смену категории/фильтров
@@ -166,18 +169,18 @@ useSeoMeta({
         </div>
       </Transition>
 
-      <!-- Вышивка на заказ -->
+      <!-- Опт-прайс -->
       <div class="mt-12 overflow-hidden rounded-xl3 border border-line bg-cream/50 p-6 sm:p-8">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="font-heading text-xl sm:text-2xl">Не нашли подходящее?</h2>
+            <h2 class="font-heading text-xl sm:text-2xl">Нужен объём или позиции не из каталога?</h2>
             <p class="mt-2 max-w-lg text-sm text-muted">
-              Сделаем вышивку под ваш макет: логотип, имя или орнамент на любом изделии.
-              Пришлите идею — рассчитаем стоимость и сроки.
+              Подберём ассортимент под ваш бизнес и посчитаем цену за единицу.
+              Пришлите список — подготовим опт-прайс за день.
             </p>
           </div>
           <NuxtLink to="/services#quote" class="btn-accent btn-lg shrink-0">
-            Вышивка на заказ <AppIcon name="arrowRight" :size="18" />
+            Запросить опт-прайс <AppIcon name="arrowRight" :size="18" />
           </NuxtLink>
         </div>
       </div>

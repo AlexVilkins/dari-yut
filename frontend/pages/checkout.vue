@@ -98,7 +98,7 @@ async function submit() {
             </div>
             <div>
               <label class="label" for="phone">Телефон <span class="text-accent">*</span></label>
-              <input id="phone" v-model="form.phone" class="field" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" />
+              <input id="phone" v-model="form.phone" v-phone class="field" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" />
             </div>
           </div>
           <div>
@@ -107,7 +107,7 @@ async function submit() {
           </div>
           <div>
             <label class="label" for="comment">Комментарий к заказу</label>
-            <textarea id="comment" v-model="form.comment" class="field min-h-24" placeholder="Пожелания по макету, срокам и т.п." />
+            <textarea id="comment" v-model="form.comment" class="field min-h-24" placeholder="Пожелания по цвету, плотности, упаковке, срокам…" />
           </div>
 
           <p v-if="errorMsg" role="alert" class="flex items-center gap-2 rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">
