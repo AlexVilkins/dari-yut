@@ -8,6 +8,7 @@ const form = reactive({ full_name: '', email: '', phone: '', password: '' })
 const showPassword = ref(false)
 const submitting = ref(false)
 const errorMsg = ref('')
+const consent = ref(false)
 
 const redirectTo = computed(() => (route.query.redirect as string) || '/account/orders')
 
@@ -15,6 +16,10 @@ async function submit() {
   errorMsg.value = ''
   if (!form.full_name || !form.email || !form.password) {
     errorMsg.value = 'Заполните имя, email и пароль.'
+    return
+  }
+  if (!consent.value) {
+    errorMsg.value = 'Подтвердите согласие на обработку персональных данных.'
     return
   }
   submitting.value = true
@@ -86,11 +91,13 @@ async function submit() {
             </div>
           </div>
 
+          <ConsentCheckbox v-model="consent" />
+
           <p v-if="errorMsg" role="alert" class="flex items-center gap-2 rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">
             <AppIcon name="close" :size="16" /> {{ errorMsg }}
           </p>
 
-          <button class="btn-primary w-full" type="submit" :disabled="submitting">
+          <button class="btn-primary w-full" type="submit" :disabled="submitting || !consent">
             {{ submitting ? 'Создаём…' : 'Зарегистрироваться' }}
           </button>
         </form>

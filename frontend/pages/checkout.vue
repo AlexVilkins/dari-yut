@@ -18,6 +18,7 @@ const form = reactive({
 
 const submitting = ref(false)
 const errorMsg = ref('')
+const consent = ref(false)
 
 const steps = [
   { n: 1, label: 'Корзина' },
@@ -33,6 +34,10 @@ async function submit() {
   }
   if (!form.contact_name || !form.phone || !form.delivery_address) {
     errorMsg.value = 'Заполните имя, телефон и адрес доставки.'
+    return
+  }
+  if (!consent.value) {
+    errorMsg.value = 'Подтвердите согласие на обработку персональных данных.'
     return
   }
 
@@ -134,7 +139,10 @@ async function submit() {
             <span>Итого</span>
             <span class="tnum font-semibold">{{ formatPrice(cart.total) }}</span>
           </div>
-          <button class="btn-accent mt-6 w-full" type="submit" :disabled="submitting">
+          <div class="mt-6">
+            <ConsentCheckbox v-model="consent" />
+          </div>
+          <button class="btn-accent mt-4 w-full" type="submit" :disabled="submitting || !consent">
             <AppIcon v-if="!submitting" name="send" :size="18" />
             {{ submitting ? 'Отправляем…' : 'Отправить заявку' }}
           </button>

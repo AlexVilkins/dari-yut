@@ -17,6 +17,7 @@ const file = ref<File | null>(null)
 const dragOver = ref(false)
 const submitting = ref(false)
 const errorMsg = ref('')
+const consent = ref(false)
 
 const products = [
   'Банные полотенца',
@@ -61,6 +62,10 @@ async function submit() {
     errorMsg.value = 'Укажите имя и телефон — без них не сможем перезвонить.'
     return
   }
+  if (!consent.value) {
+    errorMsg.value = 'Подтвердите согласие на обработку персональных данных.'
+    return
+  }
   submitting.value = true
   try {
     await api('/quotes', {
@@ -82,6 +87,7 @@ async function submit() {
     form.quantity = ''
     form.comment = ''
     file.value = null
+    consent.value = false
   } catch (e: any) {
     errorMsg.value =
       e?.data?.detail?.[0]?.msg ||
@@ -160,12 +166,13 @@ async function submit() {
       <AppIcon name="close" :size="16" /> {{ errorMsg }}
     </p>
 
-    <button class="btn-accent btn-lg mt-6 w-full" type="submit" :disabled="submitting">
+    <div class="mt-6">
+      <ConsentCheckbox v-model="consent" />
+    </div>
+
+    <button class="btn-accent btn-lg mt-5 w-full" type="submit" :disabled="submitting || !consent">
       <AppIcon v-if="!submitting" name="send" :size="18" />
       {{ submitting ? 'Отправляем…' : 'Запросить опт-прайс' }}
     </button>
-    <p class="mt-3 text-center text-xs text-muted">
-      Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
-    </p>
   </form>
 </template>

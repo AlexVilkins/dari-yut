@@ -91,8 +91,11 @@ const year = new Date().getFullYear()
       </div>
 
       <div class="border-t border-line/70">
-        <div class="container-x py-5 text-xs text-muted">
-          © {{ year }} {{ site.name }} · Махровые изделия оптом
+        <div class="container-x flex flex-col gap-2 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+          <span>© {{ year }} {{ site.name }} · Махровые изделия оптом</span>
+          <NuxtLink to="/policy" class="transition-colors hover:text-forest">
+            Политика обработки персональных данных
+          </NuxtLink>
         </div>
       </div>
     </div>
